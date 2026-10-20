@@ -1,4 +1,4 @@
-export type NodeType = "Program" | "NumericLiteral" | "Identifier" | "BinaryExpr" | "CallExpr" | "UnaryExpr" | "FunctionDeclaration";
+export type NodeType = "Program" | "NumericLiteral" | "NullLiteral" | "Identifier" | "BinaryExpr" | "CallExpr" | "UnaryExpr" | "FunctionDeclaration";
 
 // stmt goes for statement --> acts like an abstract class
 // does not return a value (statement)
@@ -29,4 +29,9 @@ export interface Identifier extends Expr {
 export interface NumericLiteral extends Expr {
     kind: "NumericLiteral",
     value: number;
+}
+
+export interface NullLiteral extends Expr {
+    kind: "NullLiteral",
+    value: "null",
 }
