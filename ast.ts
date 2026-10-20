@@ -1,16 +1,22 @@
 export type NodeType = 
 // STATEMENTS
-"Program" 
+| "Program" 
 | "VarDeclaration"
 
 // EXPRESSIONS 
-| "NumericLiteral" | "Identifier" | "BinaryExpr" | "CallExpr" | "UnaryExpr" | "FunctionDeclaration";
+| "AssignmentExpr"
+| "NumericLiteral" 
+| "Identifier" 
+| "BinaryExpr" 
+
 
 // stmt goes for statement --> acts like an abstract class
 // does not return a value (statement)
 export interface Stmt {
     kind: NodeType
 }
+
+export interface Expr extends Stmt {}
 
 export interface Program extends Stmt {
     kind: "Program",
@@ -24,8 +30,6 @@ export interface VarDeclaration extends Stmt {
     identifier: string,
     value?: Expr
 }
-
-export interface Expr extends Stmt {}
 
 // expressions do return values
 export interface BinaryExpr extends Expr {
@@ -43,4 +47,10 @@ export interface Identifier extends Expr {
 export interface NumericLiteral extends Expr {
     kind: "NumericLiteral",
     value: number;
+}
+
+export interface AssignmentExpr extends Expr {
+    kind: "AssignmentExpr",
+    assigne: Expr,
+    value: Expr
 }

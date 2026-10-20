@@ -100,7 +100,7 @@ export function tokenize (sourceCode: string): Token[]{
     tokens.push({type: TokenType.EOF, value: "EndOfFile"});
     return tokens;
 }
-const source = await Deno.readTextFile("./test.txt");
+/*const source = await Deno.readTextFile("./test.txt");
 for (const token of tokenize(source)){
     console.log(token);
-}
+}*/ 

@@ -1,4 +1,4 @@
-import { Stmt, Program, Expr, BinaryExpr, NumericLiteral, Identifier, VarDeclaration} from "./ast.ts";
+import { Stmt, Program, Expr, BinaryExpr, NumericLiteral, Identifier, VarDeclaration, AssignmentExpr} from "./ast.ts";
 import { tokenize, Token, TokenType } from "./lexer.ts";
 
 export default class Parser {
@@ -81,7 +81,20 @@ export default class Parser {
     }
 
     private parse_expr(): Expr {
-        return this.parse_additive_expr();
+        return this.parse_assignment_expr();
+    }
+
+    private parse_assignment_expr(): Expr {
+        const left = this.parse_additive_expr() // switch this out with objectExpr
+
+        if (this.at().type == TokenType.Equals){
+            this.eat() // advance past equals
+            const value = this.parse_assignment_expr(); // allow chaining
+            return {value, assigne: left, kind: "AssignmentExpr"} as AssignmentExpr;
+        }
+
+        return left;
+
     }
 
     // 45 * 3 - 5
