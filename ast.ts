@@ -5,6 +5,8 @@ export type NodeType =
 
 // EXPRESSIONS 
 | "AssignmentExpr"
+| "MemberExpr"
+| "CallExpr"
 
 // LITERALS
 | "Property"
@@ -68,4 +70,17 @@ export interface Property extends Expr {
 export interface ObjectLiteral extends Expr {
     type: "ObjectLiteral";
     properties: Property[]
+}
+
+export interface MemberExpr extends Expr{
+    kind: "MemberExpr"
+    object: Expr;
+    property: Expr;
+    computed: boolean;  // foo.bar() = memberedExpr; same result as foo["bar"]() or foo[returnFoo()]() = ComputedExpr
+}
+
+export interface CallExpr extends Expr {
+    kind: "CallExpr";
+    args: Expr[];
+    caller: Expr;
 }

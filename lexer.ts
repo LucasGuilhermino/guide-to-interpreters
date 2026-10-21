@@ -10,12 +10,16 @@ export enum TokenType {
     //Grouping * Operators
     BinaryOperator,
     Equals,
-    Comma, Colon,  // :
+    Comma,
+    Dot, 
+    Colon,  // :
     Semicolon,
     OpenParen, // (
     CloseParen, // )
-    OpenBracket, // {
-    CloseBracket, // }
+    OpenBrace, // {
+    CloseBrace, // }
+    OpenBracket, // [
+    CloseBracket, // ]
     EOF, // Signified the end of file
 }
 
@@ -56,21 +60,27 @@ export function tokenize (sourceCode: string): Token[]{
         if (src[0] == '(') {
             tokens.push(token(src.shift(), TokenType.OpenParen));
         } else if (src[0] == ")") {
-            tokens.push(token(src.shift(), TokenType.CloseParen))
-        } else if (src[0] == "{"){
-            tokens.push(token(src.shift(), TokenType.OpenBracket))
-        } else if (src[0] == "}"){
+            tokens.push(token(src.shift(), TokenType.CloseParen));
+        } else if (src[0] == "{") {
+            tokens.push(token(src.shift(), TokenType.OpenBrace));
+        } else if (src[0] == "}") {
+            tokens.push(token(src.shift(), TokenType.CloseBrace));
+        } else if (src[0] == "[") {
+            tokens.push(token(src.shift(), TokenType.OpenBracket));
+        } else if (src[0] == "]") {
             tokens.push(token(src.shift(), TokenType.CloseBracket));
         } else if (src[0] == "+" || src[0] == "-" || src[0] == "*" || src[0] == "/" || src[0] == "%") {
             tokens.push(token(src.shift(), TokenType.BinaryOperator));
         } else if (src[0] == "=") {
             tokens.push(token(src.shift(), TokenType.Equals));
-        } else if (src[0] == ";"){
+        } else if (src[0] == ";") {
             tokens.push(token(src.shift(), TokenType.Semicolon));
-        } else if (src[0] == ":"){
+        } else if (src[0] == ":") {
             tokens.push(token(src.shift(), TokenType.Colon));
-        } else if (src[0] == ","){
+        } else if (src[0] == ",") {
             tokens.push(token(src.shift(), TokenType.Comma));
+        } else if (src[0] == ".") {
+            tokens.push(token(src.shift(), TokenType.Dot));
         } else {
             // Handle multicharacter tokens
             
