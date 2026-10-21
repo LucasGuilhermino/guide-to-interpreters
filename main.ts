@@ -1,18 +1,32 @@
 import Parser from "./parser.ts";
-import Environment from "./runtime/environment.ts";
+import Environment, { createGlobalEnv } from "./runtime/environment.ts";
 import { evaluate } from "./runtime/interpreter.ts";
-import { MK_BOOL, MK_NULL, MK_NUMBER} from "./runtime/values.ts";
 
-repl();
+//repl();
+
+run("./test.txt");
+
+async function run(filename:string) {
+    const parser = new Parser();
+    const env = createGlobalEnv();
+
+    const input = await Deno.readTextFile(filename);
+    const program = parser.produceAST(input);
+    const result = evaluate(program, env);
+    console.log(result);
+    
+}
+
+
 
 
 async function repl (){
     const parser = new Parser();
-    const env = new Environment()
-    env.declareVar("true", MK_BOOL(true), true);
-    env.declareVar("false", MK_BOOL(false), true);
-    env.declareVar("null", MK_NULL(), true);
+    const env = createGlobalEnv();
+    // INITIALIZE REPL
     console.log("\nRepl v0.1");
+
+    // Continue Repl until user stops or types exit
     while (true) {
         const input = prompt("> ");
 

@@ -5,6 +5,10 @@ export type NodeType =
 
 // EXPRESSIONS 
 | "AssignmentExpr"
+
+// LITERALS
+| "Property"
+| "ObjectLiteral"
 | "NumericLiteral" 
 | "Identifier" 
 | "BinaryExpr" 
@@ -53,4 +57,15 @@ export interface AssignmentExpr extends Expr {
     kind: "AssignmentExpr",
     assigne: Expr,
     value: Expr
+}
+
+export interface Property extends Expr {
+    kind: "Property",
+    key: string,
+    value?: Expr,
+}
+
+export interface ObjectLiteral extends Expr {
+    type: "ObjectLiteral";
+    properties: Property[]
 }
